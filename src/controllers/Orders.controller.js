@@ -15,7 +15,6 @@ class OrdersController {
 
       orders.forEach(async (order) => {
         const { chatId } = await User.findById(order.user)
-        console.log(chatId)
         orderId = order._id
         const events = await updateOrderEvent(order)
 
