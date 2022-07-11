@@ -14,7 +14,8 @@ class OrdersController {
       if (!orders.length) return
 
       orders.forEach(async (order) => {
-        const { chatId } = User.findById(order.user)
+        const { chatId } = await User.findById(order.user)
+        console.log(chatId)
         orderId = order._id
         const events = await updateOrderEvent(order)
 
