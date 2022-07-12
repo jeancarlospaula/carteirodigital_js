@@ -8,6 +8,7 @@ const tracking = async (code) => {
       data = res
     })
     .catch((error) => {
+      console.log(`Error tracking order ${code}`)
       throw error
     })
 
