@@ -2,7 +2,6 @@ const { checkOrderPosted } = require('../utils/checkOrderPosted')
 const { orderDeliveredMessage, lastUpdateMessage, orderPostedMessage } = require('./../templates/messages')
 
 const getLastUpdateMessage = ({ lastEvent, trackingCode }) => {
-  console.log(lastEvent)
   const event = {
     code: trackingCode,
     status: lastEvent.status,
