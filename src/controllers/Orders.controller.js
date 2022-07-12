@@ -12,11 +12,11 @@ class OrdersController {
 
       if (!orders.length) return console.log('All orders have been delivered')
 
-      orders.forEach(async (order) => {
+      await Promise.all(orders.map(async (order) => {
         let orderId
         let events
         try {
-          const { chatId } = await User.findById(order.user, 'chatId -_id')
+          const { chatId, firstName } = await User.findById(order.user, 'chatId firstName -_id')
           events = await updateOrderEvent(order)
 
           orderId = order._id
@@ -24,7 +24,7 @@ class OrdersController {
 
           await notifyTelegram({
             chatId,
-            message: getLastUpdateMessage({ lastEvent: events[0], trackingCode: order.trackingCode })
+            message: getLastUpdateMessage({ lastEvent: events[0], trackingCode: order.trackingCode, firstName })
           })
 
           const isOrderDelivered = checkDeliveredOrder(events[0].status)
@@ -35,7 +35,7 @@ class OrdersController {
           }
           console.log(error)
         }
-      })
+      }))
     } catch (error) {
       console.log(error)
     }
