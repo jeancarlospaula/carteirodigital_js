@@ -1,6 +1,5 @@
 const checkInvalidCode = (message) => {
-  if (message && message.includes('Objeto inválido')) return true
-  return false
+  return message && message.includes(process.env.MESSAGE_INVALID_TRACKING_CODE)
 }
 
 module.exports = { checkInvalidCode }
