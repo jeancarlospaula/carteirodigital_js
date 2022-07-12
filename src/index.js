@@ -1,7 +1,7 @@
 require('dotenv').config()
 const cron = require('node-cron')
+const { connectDB } = require('../src/database/connection/connectDB.js')
 const OrdersController = require('./controllers/Orders.controller')
-const connectDB = require('../src/database/connection/connectDB.js')
 
 const start = async () => {
   await connectDB()
