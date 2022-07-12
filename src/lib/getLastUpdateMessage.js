@@ -1,9 +1,8 @@
 const { checkOrderPosted } = require('../utils/checkOrderPosted')
 const { orderDeliveredMessage, lastUpdateMessage, orderPostedMessage } = require('./../templates/messages')
 
-const getLastUpdateMessage = ({ lastEvent, trackingCode }) => {
+const getLastUpdateMessage = ({ lastEvent, trackingCode, firstName }) => {
   const event = {
-    code: trackingCode,
     status: lastEvent.status,
     cityOrigin: lastEvent.location.city,
     stateOrigin: lastEvent.location.state,
@@ -11,7 +10,9 @@ const getLastUpdateMessage = ({ lastEvent, trackingCode }) => {
     cityDestiny: lastEvent.destination?.city,
     stateDestiny: lastEvent.destination?.state,
     typeDestiny: lastEvent.destination?.type,
-    dateUpdate: lastEvent.dateUpdate
+    dateUpdate: lastEvent.dateUpdate,
+    trackingCode,
+    firstName
   }
 
   if (event.cityDestiny && event.stateDestiny && event.typeDestiny) {
