@@ -1,6 +1,6 @@
 const { tracking } = require('../services/correios/tracking')
 const { checkInvalidCode } = require('../utils/checkInvalidCode')
-const { fillOrderEvents } = require('../utils/fillOrderEvents')
+const { fillOrderEvents } = require('./fillOrderEvents')
 
 const updateOrderEvent = async (order) => {
   const trackingData = await tracking(order.trackingCode)
