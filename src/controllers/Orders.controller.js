@@ -1,38 +1,42 @@
+const Order = require('../repositories/order.repository')
+const User = require('../repositories/user.repository')
 const { updateOrderEvent } = require('../lib/updateOrderEvent')
 const { getLastUpdateMessage } = require('../lib/getLastUpdateMessage')
-const Order = require('../repositories/order.repository')
-const { Telegraf } = require('telegraf')
-const User = require('../repositories/user.repository')
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const { notifyTelegram } = require('../services/telegram/notifyTelegram')
+const { checkDeliveredOrder } = require('../utils/checkDeliveredOrder')
 
 class OrdersController {
   static async updateAndNotify () {
-    let orderId
     try {
       const orders = await Order.find({ delivered: false })
 
-      if (!orders.length) return
+      if (!orders.length) return console.log('All orders have been delivered')
 
       orders.forEach(async (order) => {
-        const { chatId } = await User.findById(order.user)
-        orderId = order._id
-        const events = await updateOrderEvent(order)
+        let orderId
+        let events
+        try {
+          const { chatId } = await User.findById(order.user, 'chatId -_id')
+          events = await updateOrderEvent(order)
 
-        if (!events) return console.log(`Order ${orderId.toString()} has no new updates`)
+          orderId = order._id
+          if (!events) return console.log(`Order ${orderId.toString()} has no new updates`)
 
-        let delivered = false
-        if (events[0].status.includes('Objeto entregue ao destinatário')) {
-          delivered = true
+          await notifyTelegram({
+            chatId,
+            message: getLastUpdateMessage({ lastEvent: events[0], trackingCode: order.trackingCode })
+          })
+
+          const isOrderDelivered = checkDeliveredOrder(events[0].status)
+          await Order.findByIdAndUpdate(orderId, { events, delivered: isOrderDelivered, notificationSent: true })
+        } catch (error) {
+          if (orderId && events) {
+            await Order.findByIdAndUpdate(orderId, { notificationSent: false })
+          }
+          console.log(error)
         }
-
-        bot.telegram.sendMessage(chatId, getLastUpdateMessage({ lastEvent: events[0], trackingCode: order.trackingCode }))
-
-        await Order.findByIdAndUpdate(orderId, { events, delivered, notificationSent: true })
       })
     } catch (error) {
-      if (orderId) {
-        await Order.findByIdAndUpdate(orderId, { notificationSent: false })
-      }
       console.log(error)
     }
   }
