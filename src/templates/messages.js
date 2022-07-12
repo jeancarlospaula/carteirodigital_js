@@ -41,7 +41,8 @@ const orderPostedMessage = ({
 *CÓDIGO*: ${code}\n\n
 *STATUS*: ${status}\n\n
 *LOCAL*: ${cityOrigin.toUpperCase()} - ${stateOrigin.toUpperCase()}\n\n
-*DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n`
+*DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
+*Assim que ela se movimentar novamente passou aqui para te avisar, ok? Até logo!* 😃`
 
 module.exports = {
   lastUpdateMessage,
