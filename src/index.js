@@ -9,7 +9,9 @@ const start = async () => {
 
   // Job run at every 5 minutes
   cron.schedule('*/5 * * * *', async () => {
+    console.log(`Job started at ${new Date().toISOString()}`)
     await OrdersController.updateAndNotify()
+    console.log(`Job Finished at ${new Date().toISOString()}`)
   })
 }
 
