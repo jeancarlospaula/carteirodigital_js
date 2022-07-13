@@ -4,6 +4,7 @@ const { updateOrderEvent } = require('../lib/updateOrderEvent')
 const { getLastUpdateMessage } = require('../lib/getLastUpdateMessage')
 const { notifyTelegram } = require('../services/telegram/notifyTelegram')
 const { checkDeliveredOrder } = require('../utils/checkDeliveredOrder')
+const { errorHandler } = require('../utils/errors/errorHandler')
 
 class OrdersController {
   static async updateAndNotify () {
@@ -33,11 +34,11 @@ class OrdersController {
           if (orderId && events) {
             await Order.findByIdAndUpdate(orderId, { notificationSent: false })
           }
-          console.log(error)
+          errorHandler(error)
         }
       }))
     } catch (error) {
-      console.log(error)
+      errorHandler(error)
     }
   }
 }
