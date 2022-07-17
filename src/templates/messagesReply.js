@@ -75,6 +75,20 @@ const quitMessage = firstName =>
 Então, não vou mais te atualizar sobre a movimentação das suas encomendas, tudo bem?\n\n
 Caso queira voltar a rastreá-las, é so clicar aqui embaixo! 😉`
 
+const importOrderMessage = ({
+  trackingCode,
+  status,
+  countryName,
+  dateUpdate,
+  firstName
+}) => `
+${firstName}, parece que esta encomenda está fora do Brasil, sil, sil. Esta é sua última atualização! 🌏 \n\n
+*CÓDIGO*: ${trackingCode}\n\n
+*STATUS*: ${status}\n\n
+*LOCAL*: ${countryName}\n\n
+*DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
+*Assim que ela chegar no Brasil, eu consigo te passar dados mais precisos sobre a sua localização, ok? Até logo!* 🇧🇷`
+
 module.exports = {
   welcomeMessage,
   firstCodeMessage,
@@ -85,5 +99,6 @@ module.exports = {
   errorMessage,
   acceptTermsMessage,
   rejectedTermsMessage,
-  quitMessage
+  quitMessage,
+  importOrderMessage
 }
