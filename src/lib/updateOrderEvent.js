@@ -10,7 +10,8 @@ const updateOrderEvent = async (order) => {
 
   const orderEvents = fillOrderEvents(trackingData[0].eventos)
 
-  if (orderEvents.length && orderEvents.length <= order.events.length) return
+  const orderWithoutUpdates = orderEvents.length && orderEvents.length <= order.events.length
+  if (orderWithoutUpdates) return
 
   return orderEvents
 }

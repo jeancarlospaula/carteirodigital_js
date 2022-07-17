@@ -30,15 +30,19 @@ const OrderSchema = new Schema({
     location: {
       city: {
         type: String,
-        required: true
+        required: false
       },
       state: {
         type: String,
-        required: true
+        required: false
       },
       type: {
         type: String,
         required: true
+      },
+      countryName: {
+        type: String,
+        required: false
       }
     },
     destination: {

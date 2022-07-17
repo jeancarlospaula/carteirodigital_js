@@ -48,8 +48,23 @@ const orderPostedMessage = ({
 *DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
 *Assim que ela se movimentar novamente, eu passo aqui para te avisar, ok? Até logo!* 😃`
 
+const importOrderMessage = ({
+  trackingCode,
+  status,
+  countryName,
+  dateUpdate,
+  firstName
+}) => `
+Sua importação se movimentoooou, ${firstName}! 📦 🌏 \n\n
+*CÓDIGO*: ${trackingCode}\n\n
+*STATUS*: ${status}\n\n
+*LOCAL*: ${countryName}\n\n
+*DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
+*Assim que ela chegar no Brasil, eu consigo te passar dados mais precisos sobre a sua localização, ok? Até logo! 🇧🇷*`
+
 module.exports = {
   lastUpdateMessage,
   orderDeliveredMessage,
-  orderPostedMessage
+  orderPostedMessage,
+  importOrderMessage
 }
