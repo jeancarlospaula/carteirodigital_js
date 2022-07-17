@@ -11,7 +11,11 @@ const UserSchema = new Schema({
   },
   username: {
     type: String,
-    required: true
+    required: false
+  },
+  acceptedTerms: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
