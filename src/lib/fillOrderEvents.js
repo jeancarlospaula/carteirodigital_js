@@ -3,9 +3,10 @@ const fillOrderEvents = events => {
     status: event.descricao,
     dateUpdate: event.dtHrCriado,
     location: {
-      city: event.unidade.endereco.cidade,
-      state: event.unidade.endereco.uf,
-      type: event.unidade.tipo
+      city: event.unidade?.endereco?.cidade,
+      state: event.unidade?.endereco?.uf,
+      type: event.unidade?.tipo,
+      countryName: event.unidade?.nome
     },
     destination: {
       city: event.unidadeDestino ? event.unidadeDestino.endereco.cidade : null,
