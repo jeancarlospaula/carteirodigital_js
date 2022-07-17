@@ -1,7 +1,7 @@
-const { checkOrderPosted } = require('../utils/checkOrderPosted')
-const { orderDeliveredMessage, lastUpdateMessage, orderPostedMessage } = require('./../templates/messages')
+const { getJobMessage } = require('./getJobMessage')
+const { getReplyMessage } = require('./getReplyMessage')
 
-const getLastUpdateMessage = ({ lastEvent, trackingCode, firstName }) => {
+const getLastUpdateMessage = ({ lastEvent, trackingCode, firstName, type }) => {
   const event = {
     status: lastEvent.status,
     cityOrigin: lastEvent.location.city,
@@ -15,17 +15,11 @@ const getLastUpdateMessage = ({ lastEvent, trackingCode, firstName }) => {
     firstName
   }
 
-  if (event.cityDestiny && event.stateDestiny && event.typeDestiny) {
-    return lastUpdateMessage(event)
+  if (type === 'MESSAGE') {
+    return getReplyMessage(event)
   }
 
-  const isOrderPosted = checkOrderPosted(event.status)
-
-  if (isOrderPosted) {
-    return orderPostedMessage(event)
-  }
-
-  return orderDeliveredMessage(event)
+  return getJobMessage(event)
 }
 
 module.exports = {
