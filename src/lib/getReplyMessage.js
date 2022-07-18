@@ -2,24 +2,19 @@ const {
   lastUpdateMessage,
   orderPostedMessage,
   orderDeliveredMessage,
-  importOrderMessage
+  importOrderMessage,
+  orderDeliveryMessage
 } = require('../templates/messagesReply')
-const { checkImportationOrder } = require('../utils/checkImportationOrder')
-const { checkOrderPosted } = require('../utils/checkOrderPosted')
+const { checkDeliveryOrder: isOrderDelivery } = require('../utils/checkDeliveryOrder')
+const { checkImportationOrder: isImportationOrder } = require('../utils/checkImportationOrder')
+const { checkOrderPosted: isOrderPosted } = require('../utils/checkOrderPosted')
+const { checkUpdateOrder: isOrderWithUpdate } = require('../utils/checkUpdateOrder')
 
 const getReplyMessage = event => {
-  if (event.cityDestiny && event.stateDestiny && event.typeDestiny) {
-    return lastUpdateMessage(event)
-  }
-
-  const isImportationOrder = checkImportationOrder(event)
-  if (isImportationOrder) return importOrderMessage(event)
-
-  const isOrderPosted = checkOrderPosted(event.status)
-
-  if (isOrderPosted) {
-    return orderPostedMessage(event)
-  }
+  if (isOrderWithUpdate(event)) return lastUpdateMessage(event)
+  if (isImportationOrder(event)) return importOrderMessage(event)
+  if (isOrderPosted(event)) return orderPostedMessage(event)
+  if (isOrderDelivery(event)) return orderDeliveryMessage(event)
 
   return orderDeliveredMessage(event)
 }
