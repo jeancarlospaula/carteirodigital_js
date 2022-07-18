@@ -33,6 +33,21 @@ const orderDeliveredMessage = ({
 *DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
 *Se quiser começar a rastrear um nova encomenda, é só digital o código dela aqui embaixo! 📫*`
 
+const orderDeliveryMessage = ({
+  trackingCode,
+  status,
+  cityOrigin,
+  stateOrigin,
+  dateUpdate,
+  firstName
+}) => `
+*Já vai abrindo a porta aí, que sua encomenda está chegando, ${firstName}! 📦*\n\n
+*CÓDIGO*: ${trackingCode}\n\n
+*STATUS*: ${status}\n\n
+*LOCAL*: ${cityOrigin.toUpperCase()} - ${stateOrigin.toUpperCase()}\n\n
+*DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
+*Assim que ela se movimentar novamente, eu passo aqui para te avisar, ok? Até logo!* 😃`
+
 const orderPostedMessage = ({
   trackingCode,
   status,
@@ -66,5 +81,6 @@ module.exports = {
   lastUpdateMessage,
   orderDeliveredMessage,
   orderPostedMessage,
-  importOrderMessage
+  importOrderMessage,
+  orderDeliveryMessage
 }

@@ -30,6 +30,21 @@ const lastUpdateMessage = ({
 *DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
 *Assim que ela se movimentar novamente, eu passo aqui para te avisar, ok? Até logo!* 😃`
 
+const orderDeliveryMessage = ({
+  trackingCode,
+  status,
+  cityOrigin,
+  stateOrigin,
+  dateUpdate,
+  firstName
+}) => `
+*Já vai abrindo a porta aí, que sua encomenda está chegando, ${firstName}! 📦*\n\n
+*CÓDIGO*: ${trackingCode}\n\n
+*STATUS*: ${status}\n\n
+*LOCAL*: ${cityOrigin.toUpperCase()} - ${stateOrigin.toUpperCase()}\n\n
+*DATA DA ATUALIZAÇÃO*: ${dateUpdate}\n\n
+*Assim que ela se movimentar novamente, eu passo aqui para te avisar, ok? Até logo!* 😃`
+
 const orderDeliveredMessage = ({
   trackingCode,
   status,
@@ -100,5 +115,6 @@ module.exports = {
   acceptTermsMessage,
   rejectedTermsMessage,
   quitMessage,
-  importOrderMessage
+  importOrderMessage,
+  orderDeliveryMessage
 }
